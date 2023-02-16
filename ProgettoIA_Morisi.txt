@@ -1,0 +1,7 @@
+Morisi Simone 265363
+La mia idea per il progetto è quella di sviluppare un agente di consigli di viaggio, 
+un agente progettato per consigliare destinazioni di viaggio e itinerari utilizzando tecniche di raccomandazione e di machine learning.
+L'agente consiglierà le mete in base alle attività, al clima e ad altre abitudini preferite dall'utente.
+Il risultato sarà composto da 4 mete possibili, l'utente sceglierà la sua preferita e quella chepreferisce di meno, 
+da questi risultati l'agente migliorerà nei consigli futuri.
+Del posto scelto come preferito l'agente consiglierà dei luoghi d'interesse in base ai gusti precedentemente descritti dall'utente.
