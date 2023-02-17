@@ -1,58 +1,50 @@
-destinazione,attività,tempo,ambiente,cultura,cibo,preferiti
-Roma,storica,caldo,urbano,europea,pizza,0
-Londra,shopping,piovoso,urbano,europea,pesce,0
-Parigi,romantica,fresca,urbana,europea,croissant,0
-Tokyo,moderna,calda,urbana,asiatica,sushi,0
-New York,cosmopolita,afosa,urbana,americana,hamburger,0
-Barcellona,artistica,calda,urbana,europea,tapas,0
-Città del Messico,storica,afosa,urbana,nordamericana,tacos,0
-Berlino,alternativa,fresca,urbana,europea,currywurst,0
-Sidney,costiera,calda,urbana,australiana,meat pie,0
-Rio de Janeiro,tropicale,calda,urbana,sudamericana,feijoada,0
-Bangkok,caotica,afosa,urbana,asiatica,pad thai,0
-Amsterdam,pittoresca,umida,urbana,europea,stroopwafel,0
-San Francisco,trendy,nebbiosa,urbana,americana,burrito,0
-Madrid,culturale,calda,urbana,europea,churros,0
-Dubai,lussuosa,arida,urbana,medio orientale,baklava,0
-Mumbai,caotica,umida,urbana,asiatica,biryani,0
-Vienna,raffinata,fresca,urbana,europea,strudel,0
-Seoul,moderna,fredda,urbana,asiatica,bulgogi,0
-Firenze,artistica,calda,urbana,europea,gelato,0
-Los Angeles,divertente,soleggiata,urbana,americana,tacos,0
-Hong Kong,affollata,umida,urbana,asiatica,dim sum,0
-Istanbul,storica,temperata,urbana,medio orientale,kebab,0
-Toronto,multiculturale,fredda,urbana,nordamericana,poutine,0
-San Paolo,cosmopolita,calda,urbana,sudamericana,coxinha,0
-Shanghai,moderna,umida,urbana,asiatica,xiaolongbao,0
-Venezia,romantica,fresca,urbana,europea,cicchetti,0
-Napoli,caotica,calda,urbana,europea,spaghetti alla puttanesca,0
-Matera,antica,calda,urbana,europea,orecchiette con le cime di rapa,0
-Bologna,accogliente,temperata,urbana,europea,tagliatelle al ragù,0
-Palermo,vivace,calda,urbana,europea,arancine,0
-Verona,romantica,temperata,urbana,europea,risotto all'Amarone,0
-Genova,storica,temperata,urbana,europea,pesto alla genovese,0
-Lecce,barocca,calda,urbana,europea,pasticciotto,0
-Trieste,multiculturale,umida,urbana,europea,frico,0
-Helsinki,minimalista,fredda,urbana,europea,kalakukko,0
-Rio Grande,costiera,calda,urbana,sudamericana,churrasco,0
-Marrakech,esotica,calda,urbana,africana,tajine,0
-Honolulu,tropicale,calda,urbana,americana,poke,0
-Lisbona,pittoresca,temperata,urbana,europea,pasteis de nata,0
-Dublino,storica,piovosa,urbana,europea,fish and chips,0
-Buenos Aires,cosmopolita,calda,urbana,sudamericana,asado,0
-Atene,antica,calda,urbana,europea,moussaka,0
-Reykjavik,pittoresca,fredda,urbana,europea,skyr,0
-Chiang Mai,rilassante,calda,urbana,asiatica,khao soi,0
-Vancouver,cosmopolita,temperata,urbana,nordamericana,poutine,0
-Taipei,moderna,umida,urbana,asiatica,bubble tea,0
-Salonicco,storica,calda,urbana,europea,souvlaki,0
-Austin,alternativa,calda,urbana,americana,barbecue,0
-Copenhagen,minimalista,fredda,urbana,europea,frikadeller,0
-
-
-
-
-
-
-
-
+Destinazione,Attività,Temperatura,Ambiente,Cultura,Cibo tipico,Visitato
+Roma,storica,calda,urbano,europea,pizza,1
+Londra,shopping,piovosa,urbano,europea,pesce,0
+Parigi,romantica,fresca,urbano,europea,croissant,1
+Tokyo,moderna,calda,urbano,asiatica,sushi,0
+New York,cosmopolita,afosa,urbano,americana,hamburger,0
+Barcellona,artistica,calda,urbano,europea,tapas,0
+Città del Messico,storica,afosa,urbano,nordamericana,tacos,0
+Berlino,alternativa,fresca,urbano,europea,currywurst,0
+Sidney,costiera,calda,urbano,australiana,meat pie,0
+Rio de Janeiro,tropicale,calda,urbano,sudamericana,feijoada,0
+Bangkok,caotica,afosa,urbano,asiatica,pad thai,0
+Amsterdam,pittoresca,umida,urbano,europea,stroopwafel,0
+San Francisco,trendy,nebbiosa,urbano,americana,burrito,0
+Madrid,culturale,calda,urbano,europea,churros,0
+Dubai,lussuosa,arida,urbano,medio orientale,baklava,0
+Mumbai,caotica,umida,urbano,asiatica,biryani,0
+Vienna,raffinata,fresca,urbano,europea,strudel,0
+Seoul,moderna,fredda,urbano,asiatica,bulgogi,0
+Firenze,artistica,calda,urbano,europea,gelato,0
+Los Angeles,divertente,soleggiata,urbano,americana,tacos,0
+Hong Kong,affollata,umida,urbano,asiatica,dim sum,0
+Istanbul,storica,temperata,urbano,medio orientale,kebab,0
+Toronto,multiculturale,fredda,urbano,nordamericana,poutine,0
+San Paolo,cosmopolita,calda,urbano,sudamericana,coxinha,0
+Shanghai,moderna,umida,urbano,asiatica,xiaolongbao,0
+Venezia,romantica,fresca,urbano,europea,cicchetti,0
+Napoli,caotica,calda,urbano,europea,spaghetti alla puttanesca,0
+Matera,storica,calda,urbano,europea,orecchiette con le cime di rapa,1
+Bologna,accogliente,temperata,urbano,europea,tagliatelle al ragù,0
+Palermo,vivace,calda,urbano,europea,arancine,0
+Verona,romantica,temperata,urbano,europea,risotto all'Amarone,0
+Genova,storica,temperata,urbano,europea,pesto alla genovese,0
+Lecce,barocca,calda,urbano,europea,pasticciotto,0
+Trieste,multiculturale,umida,urbano,europea,frico,0
+Helsinki,minimalista,fredda,urbano,europea,kalakukko,0
+Rio Grande,costiera,calda,urbano,sudamericana,churrasco,0
+Marrakech,esotica,calda,urbano,africana,tajine,0
+Honolulu,tropicale,calda,urbano,americana,poke,0
+Lisbona,pittoresca,temperata,urbano,europea,pasteis de nata,0
+Dublino,storica,piovosa,urbano,europea,fish and chips,0
+Buenos Aires,cosmopolita,calda,urbano,sudamericana,asado,0
+Atene,storica,calda,urbano,europea,moussaka,0
+Reykjavik,pittoresca,fredda,urbano,europea,skyr,0
+Chiang Mai,rilassante,calda,urbano,asiatica,khao soi,0
+Vancouver,cosmopolita,temperata,urbano,nordamericana,poutine,0
+Taipei,moderna,umida,urbano,asiatica,bubble tea,0
+Salonicco,storica,calda,urbano,europea,souvlaki,0
+Austin,alternativa,calda,urbano,americana,barbecue,0
+Copenhagen,minimalista,fredda,urbano,europea,frikadeller,0
