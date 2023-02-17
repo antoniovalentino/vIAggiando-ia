@@ -195,10 +195,9 @@ def main():
         preferenza = input("Inserisci una preferenza da togliere o da aggiungere: ")
         if addPreferences(preferenza):
             print(f"La preferenza {preferenza} è stata aggiunta")
-            #remove dalla lista delle preferenze
         else:
             delPreferences(preferenza)
-            print("La prefrenza {preferenza} è stata eliminata")
+            print(f"La preferenza {preferenza} è stata eliminata")
             #elimina preferenza
 
     elif scelta == '3':
