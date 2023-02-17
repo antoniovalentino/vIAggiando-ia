@@ -46,8 +46,8 @@ def changeDislikeToPreferences(pref):
         dislikesdata = pd.DataFrame(dislikesdataList, columns=['odio'])
 
 # prendere la città che è piaciuta di più e inserisce tutti gli attributi in preferences
-def addCityPreferences():
-    data = readfile("data")
+def addCityPreferences(ris):
+    global data
     like = input("Inserire il nome della destinazione che ti piace di più\n")
     risList=ris["Destinazione"][0:4].tolist()
     if like in risList:
@@ -68,12 +68,11 @@ def addCityPreferences():
 
 # funzione per l'eliminazione di una preferenza data in input dall'utente
 def delPreferences(pref):
-    preferencesdata = readfile("preferences")
+    global preferencesdata
     likes = preferencesdata["preferenze"].tolist()
     if pref in likes:
         likes.remove(pref)
-        t = pd.DataFrame(likes, columns=['preferenze'])
-        t.to_csv("preferences_data.csv", index=False)
+        preferencesdata = pd.DataFrame(likes, columns=['preferenze'])
     else:
         print("la preferenza che vuoi rimuovere non esiste")
 
@@ -88,7 +87,7 @@ def addDislike(dislike):
         return False
 
 def changePreferencesToDislikes(dislike):
-    preferencesdata = readfile("preferences")
+    global preferencesdata
     preferencesdataList = preferencesdata["preferenze"].tolist()
     if dislike in preferencesdataList:
         preferencesdataList.remove(dislike)
@@ -116,12 +115,11 @@ def addCityDislike(ris):
 
 # funzione per l'eliminazione di una preferenza
 def delDislike(dislike):
-    dislikesdata = readfile("dislikes")
+    global dislikesdata
     dislikesdataList = dislikesdata["odio"].tolist()
     if dislike in dislikesdataList:
         dislikesdataList.remove(dislike)
-        t = pd.DataFrame(dislikesdataList, columns=['odio'])
-        t.to_csv("dislikes_data.csv", index=False)
+        dislikesdata = pd.DataFrame(dislikesdataList, columns=['odio'])
     else:
         print("L'attributo che non preferisci che vuoi rimuovere non esiste")
 
@@ -163,9 +161,9 @@ def vIAggiando():
             if z in activities or z in weather or z in ambient or z in culture or z in food:
                 x += 0.5
 
-        vis = data["preferiti"][row:row + 1].tolist()
+        vis = data["Visitato"][row:row + 1].tolist()
         # controlla se la destinazione non è apprezzata o già visitata
-        if vis != 1:
+        if vis[0] != 1:
             ris = pd.concat([ris, data[row:row + 1]], ignore_index=True)
             ris.loc[row, "priorità"] = x
 
