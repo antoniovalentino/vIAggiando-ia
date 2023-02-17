@@ -19,16 +19,18 @@ preferencesdata = pd.read_csv("preferences_data.csv")
 dislikesdata = pd.read_csv("dislikes_data.csv")
 
 
+# funzione per scrivere il contenuto dei dataframe nei file
 def writeFile():
-    global data, preferencesdata, dislikesdata
-    data.to_csv("travel_data.csv", index=False)
+    global traveldata, preferencesdata, dislikesdata
+    traveldata.to_csv("travel_data.csv", index=False)
     preferencesdata.to_csv("preferences_data.csv", index=False)
     dislikesdata.to_csv("dislikes_data.csv", index=False)
 
-# funzione di scrittura nel file preference con il controllo se gia è presente prima di scrivere nel file
+
+# funzione che aggiunge al dataframe preferencesdata la nuova preferenza presa dal parametro d'ingresso
 def addPreferences(pref):
     global preferencesdata
-    # controlla se è nella lista dei dislikes prima di scrivere nel file preferiti
+    # controlla se è nella lista dei dislikes prima di scrivere nel dataframe preferencesdata
     changeDislikeToPreferences(pref)
     preferencesdataList = preferencesdata["preferenze"].tolist()
     if pref not in preferencesdataList:
@@ -37,7 +39,8 @@ def addPreferences(pref):
     else:
         return False
 
-# controllare se l'elemento preso in input è nella lista dislikes
+
+# funzione che controlla se nella lista dei dislikes è presente la preferenza usata come parametro d'ingresso
 def changeDislikeToPreferences(pref):
     global dislikesdata
     dislikesdataList = dislikesdata["odio"].tolist()
@@ -45,14 +48,15 @@ def changeDislikeToPreferences(pref):
         dislikesdataList.remove(pref)
         dislikesdata = pd.DataFrame(dislikesdataList, columns=['odio'])
 
-# prendere la città che è piaciuta di più e inserisce tutti gli attributi in preferences
+
+# funzione che prende in ingresso una città e aggiunge tutti i suoi attributi a preferencesdata
 def addCityPreferences(ris):
-    global data
+    global traveldata
     like = input("Inserire il nome della destinazione che ti piace di più\n")
-    risList=ris["Destinazione"][0:4].tolist()
+    risList = ris["Destinazione"][0:4].tolist()
     if like in risList:
         # troviamo la riga che contiene la città selezionata
-        riga = data[data['Destinazione'].str.contains(like)]
+        riga = traveldata[traveldata['Destinazione'].str.contains(like)]
 
         # richiama la funzione di scrittura nel file preferences
         addPreferences(riga.iloc[0]['Attività'])
@@ -66,7 +70,7 @@ def addCityPreferences(ris):
         return False
 
 
-# funzione per l'eliminazione di una preferenza data in input dall'utente
+# funzione per l'eliminazione di una preferenza data in ingresso dall'utente
 def delPreferences(pref):
     global preferencesdata
     likes = preferencesdata["preferenze"].tolist()
@@ -76,6 +80,8 @@ def delPreferences(pref):
     else:
         print("la preferenza che vuoi rimuovere non esiste")
 
+
+# funzione che aggiunge al dataframe dislikesdata il nuovo attributo non preferito preso dal parametro d'ingresso
 def addDislike(dislike):
     changePreferencesToDislikes(dislike)
     global dislikesdata
@@ -86,6 +92,8 @@ def addDislike(dislike):
     else:
         return False
 
+
+# funzione che controlla se nella lista delle prefrences è presente l'attributo non preferito usato come parametro d'ingresso
 def changePreferencesToDislikes(dislike):
     global preferencesdata
     preferencesdataList = preferencesdata["preferenze"].tolist()
@@ -93,15 +101,16 @@ def changePreferencesToDislikes(dislike):
         preferencesdataList.remove(dislike)
         preferencesdata = pd.DataFrame(preferencesdataList, columns=['preferenze'])
 
-# chiede la città che è piaciuta di meno all'utente
+
+# funzione che prende in ingresso una città e aggiunge tutti i suoi attributi a dislikesdata
 def addCityDislike(ris):
     global dislikesdata
-    global data
+    global traveldata
     dislike = input("Inserire il nome della destinazione che ti piace di meno\n")
     risList = ris["Destinazione"][0:4].tolist()
     if dislike in risList:
         # troviamo la riga che contiene la città selezionata
-        riga = data[data['Destinazione'].str.contains(dislike)]
+        riga = traveldata[traveldata['Destinazione'].str.contains(dislike)]
         # aggiungiamo una nuova riga alla fine del DataFrame per ogni attvità
         addDislike(riga.iloc[0]['Attività'])
         addDislike(riga.iloc[0]['Temperatura'])
@@ -113,7 +122,8 @@ def addCityDislike(ris):
         print("Scrivi una città tra quelle che ti ho consigliato")
         return False
 
-# funzione per l'eliminazione di una preferenza
+
+# funzione per l'eliminazione di un attributo non preferito
 def delDislike(dislike):
     global dislikesdata
     dislikesdataList = dislikesdata["odio"].tolist()
@@ -123,54 +133,61 @@ def delDislike(dislike):
     else:
         print("L'attributo che non preferisci che vuoi rimuovere non esiste")
 
+# funzione che marchia come visitata la città usata come parametro d'ingresso
 def isVisited(city):
-    global data
-    dataList = data["Destinazione"].tolist()
+    global traveldata
+    dataList = traveldata["Destinazione"].tolist()
     if city in dataList:
-        data.loc[data['Destinazione'] == city, 'Visitato'] = 1
+        traveldata.loc[traveldata['Destinazione'] == city, 'Visitato'] = 1
         print(f"Non ti consiglierò più {city} in futuro!\n")
     else:
         print(f"{city} non è tra le città che potrei consigliarti!\n")
 
-# controllo dei preferiti dell'utente e se una determinata città è stata tolta dai preferiti
+
+# funzione che crea i consigli per l'utente
 def vIAggiando():
-    global data
+    global traveldata
     global preferencesdata
     global dislikesdata
     t = {}
     ris = pd.DataFrame(data=t)
     ris.insert(0, "priorità", 0, allow_duplicates=False)
+    # ciclo for per prendere i singoli attributi delle varie colonne del dataframe
+    for row in range(len(traveldata)):
 
-    for row in range(len(data)):
-        activities = data.iloc[row]["Attività"]
-        weather = data.iloc[row]["Temperatura"]
-        ambient = data.iloc[row]["Ambiente"]
-        culture = data.iloc[row]["Cultura"]
-        food = data.iloc[row]["Cibo tipico"]
+        vis = traveldata["Visitato"][row:row + 1].tolist()
+        # controlla se la destinazione è stata già visitata e in quel caso la esclude dalla soluzione
+        if vis[0] == 1:
+            continue
+
+        activities = traveldata.iloc[row]["Attività"]
+        weather = traveldata.iloc[row]["Temperatura"]
+        ambient = traveldata.iloc[row]["Ambiente"]
+        culture = traveldata.iloc[row]["Cultura"]
+        food = traveldata.iloc[row]["Cibo tipico"]
         x = 0
         preferences = preferencesdata["preferenze"]
         dislikes = dislikesdata["odio"]
 
-        # controlla se un attributo della città fa parte della lista preferences
+        # controlla se l'attributo della città fa parte di preferencesdata e in quel caso aumenta la priorità di 1
         for z in preferences:
             if z in activities or z in weather or z in ambient or z in culture or z in food:
                 x += 1
 
-        # controlla se un attributo della città fa parte della lista dislikes
+        # controlla se l'attributo della città fa parte di dislikesdata e in quel caso abbassa la priorità di 0.5
         for z in dislikes:
             if z in activities or z in weather or z in ambient or z in culture or z in food:
                 x += 0.5
 
-        vis = data["Visitato"][row:row + 1].tolist()
-        # controlla se la destinazione non è apprezzata o già visitata
-        if vis[0] != 1:
-            ris = pd.concat([ris, data[row:row + 1]], ignore_index=True)
-            ris.loc[row, "priorità"] = x
+        ris = pd.concat([ris, traveldata[row:row + 1]], ignore_index=True)
+        ris.loc[row, "priorità"] = x
 
-    # stampa QUATTRO soluzioni in base alla priorità che è stata assegnata
+
+    # stampa le prime quattro soluzioni in base alla priorità che è stata assegnata
     ris = ris.sort_values(by="priorità", ascending=False)
-    print(ris[['Destinazione', 'Temperatura', 'Attività', 'Ambiente', 'Cultura', 'Cibo tipico']].head(4),'\n')
+    print(ris[['Destinazione', 'Temperatura', 'Attività', 'Ambiente', 'Cultura', 'Cibo tipico']].head(4), '\n')
     return ris
+
 
 # IDEA, gli attributi possono avere un numero N nel file, questo numero dice quante volte sono stati preferiti e
 # quindi pesano di più quando andiamo a fare i controlli (invece di fare +1 faremo +n) e serve anche per cancellarlo
@@ -189,52 +206,47 @@ def main():
             print("Queste sono le tue preferenze attuali:")
             print(preferencesdata)
 
-            # inserisci una preferenza
-            preferenza = input("\nInserisci una preferenza da aggiungere o da togliere tra queste categorie:\nattività (es. storica,romantica,moderna)\n"
-                               "temperatura (es. piovosa,fresca,calda)\nambiente (es. urbano)\ncultura (es. europea,asiatica,sudamericana)\ncibo tipico (es. pizza,croissant,sushi) \n\n")
+            preferenza = input(
+                "\nInserisci una preferenza da aggiungere o da togliere tra queste categorie:\nattività (es. storica,romantica,moderna)\n"
+                "temperatura (es. piovosa,fresca,calda)\nambiente (es. urbano)\ncultura (es. europea,asiatica,sudamericana)\ncibo tipico (es. pizza,croissant,sushi) \n\n")
             if addPreferences(preferenza):
                 print(f"La preferenza {preferenza} è stata aggiunta \n")
             else:
                 delPreferences(preferenza)
                 print(f"La preferenza {preferenza} è stata eliminata \n")
-                # elimina preferenza
 
         elif scelta == '2':
             global dislikesdata
             print(dislikesdata)
-            # inserisci una preferenza
             dislike = input("Inserisci un attributo che non preferisci da togliere o da aggiungere: ")
             if addDislike(dislike):
                 print(f"La preferenza {dislike} è stata aggiunta \n")
-                # remove dalla lista delle preferenze
             else:
                 delDislike(dislike)
                 print(f"La prefrenza {dislike} è stata eliminata \n")
-                # elimina preferenza
 
         elif scelta == '3':
-            ris = vIAggiando()  # funzione per il consiglio
+            ris = vIAggiando()
 
             is_city_in_ris = False
             while not is_city_in_ris:
-                is_city_in_ris = addCityPreferences(ris) # scelta della destinazione preferita tra quelle date a disposizione
+                is_city_in_ris = addCityPreferences(ris)  # scelta della destinazione preferita tra quelle date a disposizione
 
             is_city_in_ris = False
             while not is_city_in_ris:
-                 is_city_in_ris = addCityDislike(ris)  # scelta della destinazione che è piaciuta di meno all'utente tra quelle date a disposizione
+                is_city_in_ris = addCityDislike(ris)  # scelta della destinazione che è piaciuta di meno tra quelle date a disposizione
 
-        elif scelta== '4':
+        elif scelta == '4':
             city = input("Inserisci una città già visitata (in modo da evitare che te la consigli) :\n")
             isVisited(city)
 
         elif scelta == '5':
             x = 1
 
-
         else:
             print("Scelta non valida.")
 
-        writeFile()
+        writeFile() #scrittura dei dati dei dataframe all'interno del file a ogni iterazione del programma
 
 
 if __name__ == "__main__":
