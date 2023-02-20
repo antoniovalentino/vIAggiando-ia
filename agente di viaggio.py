@@ -7,16 +7,93 @@ INPUT:
 DURANTE:
     Esperienze precedenti: prende in considerazione gli eventi che sono piaciuti al cliente
     Conoscenze acquisite durante il percorso : preferenze dell'utente in base ai vari filtri, scelta dell'utente
-    Stimolo: eventi dati dall'utente ---> fatto
+    Stimolo: eventi dati dall'utente
     fare una lista dell'odio e togliere 1 priorità
 '''
 
 # Import libraries
 import pandas as pd
+from sklearn import tree
+from sklearn.tree import DecisionTreeClassifier
 
-data = pd.read_csv("travel_data.csv")
-preferencesdata = pd.read_csv("preferences_data.csv")
-dislikesdata = pd.read_csv("dislikes_data.csv")
+# dataframe globali che contengono il contenuto dei file
+traveldata = pd.read_csv("travel_data.csv")
+userdata = pd.read_csv("user_data.csv")
+
+def adesso():
+    a = {
+        "storica": 0,
+        "romantica": 1,
+        "moderna": 2,
+        "multiculturale": 3,
+        "artistica": 4,
+        "alternativa": 5,
+        "costiera": 6,
+        "tropicale": 7,
+        "caotica": 8,
+        "trendy": 9,
+        "lussuosa": 10,
+        "divertente": 11,
+        "accogliente": 12,
+        "vivace": 13,
+        "barocca": 14,
+        "minimalista": 15,
+        "esotica": 16,
+        "rilassante": 17
+    }
+    traveldata['Attività'] = traveldata['Attività'].map(a)
+    userdata['Attività'] = userdata['Attività'].map(a)
+
+    b = {
+        "basso": 0,
+        "medio": 1,
+        "alto": 2
+    }
+    traveldata['Budget'] = traveldata['Budget'].map(b)
+    userdata['Budget'] = userdata['Budget'].map(b)
+
+
+    c = {
+        'europea': 0,
+        'asiatica': 1,
+        'americana': 2,
+        'nordamericana': 3,
+        'australiana': 4,
+        'sudamericana': 5,
+        'medio orientale': 6,
+        'africana': 7
+    }
+    traveldata['Cultura'] = traveldata['Cultura'].map(c)
+    userdata['Cultura'] = userdata['Cultura'].map(c)
+
+    t = {
+        'fredda': 0,
+        'mite': 1,
+        'calda': 2
+
+    }
+    traveldata['Temperatura'] = traveldata['Temperatura'].map(t)
+    userdata['Temperatura'] = userdata['Temperatura'].map(t)
+
+    features = ['Attività', 'Temperatura', 'Budget', 'Cultura']
+
+    x = userdata[features]
+    y = userdata['Visitato']
+
+    dtree = DecisionTreeClassifier()
+    dtree = dtree.fit(x.values, y)
+
+    tree.plot_tree(dtree, feature_names=features)
+
+    z = 0
+    for i in range(len(traveldata)):
+        if z == 4:
+            break
+        t = []
+        t = dtree.predict([[traveldata["Attività"][i], traveldata["Temperatura"][i], traveldata["Budget"][i], traveldata["Cultura"][i]]])
+        if t[0] == 1:
+            print(traveldata["Destinazione"][i])
+        z = z + t[0]
 
 
 # funzione per scrivere il contenuto dei dataframe nei file
@@ -250,4 +327,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    #print(traveldata['Temperatura'])
+    adesso()

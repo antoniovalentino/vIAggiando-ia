@@ -1,50 +1,50 @@
-Destinazione,Attività,Temperatura,Ambiente,Cultura,Cibo tipico,Visitato
-Roma,storica,calda,urbano,europea,pizza,1
-Londra,shopping,piovosa,urbano,europea,pesce,0
-Parigi,romantica,fresca,urbano,europea,croissant,1
-Tokyo,moderna,calda,urbano,asiatica,sushi,0
-New York,cosmopolita,afosa,urbano,americana,hamburger,0
-Barcellona,artistica,calda,urbano,europea,tapas,0
-Città del Messico,storica,afosa,urbano,nordamericana,tacos,0
-Berlino,alternativa,fresca,urbano,europea,currywurst,0
-Sidney,costiera,calda,urbano,australiana,meat pie,0
-Rio de Janeiro,tropicale,calda,urbano,sudamericana,feijoada,0
-Bangkok,caotica,afosa,urbano,asiatica,pad thai,0
-Amsterdam,pittoresca,umida,urbano,europea,stroopwafel,0
-San Francisco,trendy,nebbiosa,urbano,americana,burrito,0
-Madrid,culturale,calda,urbano,europea,churros,0
-Dubai,lussuosa,arida,urbano,medio orientale,baklava,0
-Mumbai,caotica,umida,urbano,asiatica,biryani,0
-Vienna,raffinata,fresca,urbano,europea,strudel,0
-Seoul,moderna,fredda,urbano,asiatica,bulgogi,0
-Firenze,artistica,calda,urbano,europea,gelato,0
-Los Angeles,divertente,soleggiata,urbano,americana,tacos,0
-Hong Kong,affollata,umida,urbano,asiatica,dim sum,0
-Istanbul,storica,temperata,urbano,medio orientale,kebab,0
-Toronto,multiculturale,fredda,urbano,nordamericana,poutine,0
-San Paolo,cosmopolita,calda,urbano,sudamericana,coxinha,0
-Shanghai,moderna,umida,urbano,asiatica,xiaolongbao,0
-Venezia,romantica,fresca,urbano,europea,cicchetti,0
-Napoli,caotica,calda,urbano,europea,spaghetti alla puttanesca,0
-Matera,storica,calda,urbano,europea,orecchiette con le cime di rapa,1
-Bologna,accogliente,temperata,urbano,europea,tagliatelle al ragù,0
-Palermo,vivace,calda,urbano,europea,arancine,0
-Verona,romantica,temperata,urbano,europea,risotto all'Amarone,0
-Genova,storica,temperata,urbano,europea,pesto alla genovese,0
-Lecce,barocca,calda,urbano,europea,pasticciotto,0
-Trieste,multiculturale,umida,urbano,europea,frico,0
-Helsinki,minimalista,fredda,urbano,europea,kalakukko,0
-Rio Grande,costiera,calda,urbano,sudamericana,churrasco,0
-Marrakech,esotica,calda,urbano,africana,tajine,0
-Honolulu,tropicale,calda,urbano,americana,poke,0
-Lisbona,pittoresca,temperata,urbano,europea,pasteis de nata,0
-Dublino,storica,piovosa,urbano,europea,fish and chips,0
-Buenos Aires,cosmopolita,calda,urbano,sudamericana,asado,0
-Atene,storica,calda,urbano,europea,moussaka,0
-Reykjavik,pittoresca,fredda,urbano,europea,skyr,0
-Chiang Mai,rilassante,calda,urbano,asiatica,khao soi,0
-Vancouver,cosmopolita,temperata,urbano,nordamericana,poutine,0
-Taipei,moderna,umida,urbano,asiatica,bubble tea,0
-Salonicco,storica,calda,urbano,europea,souvlaki,0
-Austin,alternativa,calda,urbano,americana,barbecue,0
-Copenhagen,minimalista,fredda,urbano,europea,frikadeller,0
+Destinazione,Attività,Temperatura,Budget,Cultura,Visitato
+Roma,storica,calda,medio,europea,0
+Londra,storica,fredda,alto,europea,0
+Parigi,romantica,mite,alto,europea,0
+Tokyo,moderna,calda,alto,asiatica,0
+New York,multiculturale,calda,alto,americana,0
+Barcellona,artistica,calda,medio,europea,0
+Città del Messico,storica,calda,basso,nordamericana,0
+Berlino,alternativa,mite,basso,europea,0
+Sidney,costiera,calda,alto,australiana,0
+Rio de Janeiro,tropicale,calda,basso,sudamericana,0
+Bangkok,caotica,calda,basso,asiatica,0
+Amsterdam,artistica,mite,medio,europea,0
+San Francisco,trendy,calda,alto,americana,0
+Madrid,storica,calda,medio,europea,0
+Dubai,lussuosa,calda,alto,medio orientale,0
+Mumbai,caotica,mite,basso,asiatica,0
+Vienna,lussuosa,mite,alto,europea,0
+Seoul,moderna,fredda,medio,asiatica,0
+Firenze,artistica,calda,medio,europea,0
+Los Angeles,divertente,calda,alto,americana,0
+Hong Kong,moderna,mite,medio,asiatica,0
+Istanbul,storica,mite,basso,medio orientale,0
+Toronto,multiculturale,fredda,medio,nordamericana,0
+San Paolo,multiculturale,calda,basso,sudamericana,0
+Shanghai,moderna,mite,medio,asiatica,0
+Venezia,romantica,mite,medio,europea,0
+Napoli,caotica,calda,basso,europea,0
+Matera,storica,calda,basso,europea,0
+Bologna,accogliente,mite,medio,europea,0
+Palermo,vivace,calda,basso,europea,0
+Verona,romantica,mite,medio,europea,0
+Genova,storica,mite,medio,europea,0
+Lecce,barocca,calda,basso,europea,0
+Trieste,multiculturale,mite,basso,europea,0
+Helsinki,minimalista,fredda,alto,europea,0
+Rio Grande,costiera,calda,basso,sudamericana,0
+Marrakech,esotica,calda,basso,africana,0
+Honolulu,tropicale,calda,alto,americana,0
+Lisbona,artistica,mite,medio,europea,0
+Dublino,storica,fredda,medio,europea,0
+Buenos Aires,multiculturale,calda,alto,sudamericana,0
+Atene,storica,calda,medio,europea,0
+Reykjavik,artistica,fredda,alto,europea,0
+Chiang Mai,rilassante,calda,basso,asiatica,0
+Vancouver,multiculturale,mite,alto,nordamericana,0
+Taipei,moderna,mite,basso,asiatica,0
+Salonicco,storica,calda,medio,europea,0
+Austin,trendy,calda,medio,americana,0
+Copenhagen,minimalista,fredda,alto,europea,0
