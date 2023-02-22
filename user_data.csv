@@ -1,5 +1,9 @@
 Destinazione,Attività,Temperatura,Budget,Cultura,Visitato
-Roma,storica,fredda,medio,europea,1
-Londra,storica,fredda,medio,europea,1
 Parigi,romantica,mite,alto,europea,0
-Tokyo,moderna,mite,alto,asiatica,0
+Salonicco,storica,calda,medio,europea,1
+Copenhagen,minimalista,fredda,alto,europea,1
+Vienna,lussuosa,mite,alto,europea,0
+Roma,storica,calda,medio,europea,0
+Tokyo,moderna,calda,alto,asiatica,1
+Taipei,moderna,mite,basso,asiatica,0
+Austin,trendy,calda,medio,americana,0
