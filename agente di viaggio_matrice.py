@@ -260,33 +260,28 @@ def addCityPreferences(city):
     userdataList = userdata['Destinazione'].tolist()
 
     if city not in userdataList:
-        # troviamo la riga che contiene la città selezionata
-        riga = traveldata[traveldata['Destinazione'].str.contains(city)]
 
-        nuova_riga = pd.DataFrame(
-            {'Destinazione': [riga.iloc[0]['Destinazione']], 'Attività': [riga.iloc[0]['Attività']],
-             'Temperatura': [riga.iloc[0]['Temperatura']],
-             'Budget': [riga.iloc[0]['Budget']], 'Cultura': [riga.iloc[0]['Cultura']],
-             'Visiterei': [1]})
+        # troviamo la riga che contiene la città selezionata e la copiamo con 'Visiterei' impostato a 1
+        nuova_riga = traveldata.loc[traveldata['Destinazione'].str.contains(city)].iloc[[0], :].copy()
+        nuova_riga['Visiterei'] = 1
+
         userdata = pd.concat([userdata, nuova_riga], ignore_index=True)
         # modifica il valore nella matrice della città scelta come da visitare
         cityM[cityD[city][0]][cityD[city][1]] = 0
 
         return True
     else:
+
         riga = userdata[userdata['Destinazione'].str.contains(city)]
         if riga.iloc[0]["Visiterei"] == 1:
             userdata = userdata.drop(riga.index)
-            # modifica il valore nella matrice della città scelta come da visitare
-            cityM[cityD[city][0]][cityD[city][1]] = 0
-
-            return False
         else:
             userdata.loc[userdata['Destinazione'] == city, 'Visiterei'] = 1
-            # modifica il valore nella matrice della città scelta come da visitare
-            cityM[cityD[city][0]][cityD[city][1]] = 0
 
-            return True
+        # modifica il valore nella matrice della città scelta come da visitare
+        cityM[cityD[city][0]][cityD[city][1]] = 0
+        # return True se Visiterei = 0 e False se Visiterei = 1
+        return riga.iloc[0]["Visiterei"] != 1
 
 
 # funzione che prende in ingresso una città e nel caso non è presente nel dataframe userdata la aggiunge,
@@ -296,14 +291,11 @@ def addCityDislike(city):
     global traveldata, userdata, cityM, cityD
     userdataList = userdata['Destinazione'].tolist()
     if city not in userdataList:
-        # troviamo la riga che contiene la città selezionata
-        riga = traveldata[traveldata['Destinazione'].str.contains(city)]
 
-        nuova_riga = pd.DataFrame(
-            {'Destinazione': [riga.iloc[0]['Destinazione']], 'Attività': [riga.iloc[0]['Attività']],
-             'Temperatura': [riga.iloc[0]['Temperatura']],
-             'Budget': [riga.iloc[0]['Budget']], 'Cultura': [riga.iloc[0]['Cultura']],
-             'Visiterei': [0]})
+        # troviamo la riga che contiene la città selezionata e la copiamo con 'Visiterei' impostato a 0
+        nuova_riga = traveldata.loc[traveldata['Destinazione'].str.contains(city)].iloc[[0], :].copy()
+        nuova_riga['Visiterei'] = 0
+
         userdata = pd.concat([userdata, nuova_riga], ignore_index=True)
 
         # modifica il valore nella matrice della città scelta come da non visitare
@@ -314,18 +306,15 @@ def addCityDislike(city):
         riga = userdata[userdata['Destinazione'].str.contains(city)]
         if riga.iloc[0]["Visiterei"] == 0:
             userdata = userdata.drop(riga.index)
-
             # modifica il valore nella matrice della città scelta come da non visitare
             cityM[cityD[city][0]][cityD[city][1]] = 0
 
-            return False
         else:
             userdata.loc[userdata['Destinazione'] == city, 'Visiterei'] = 0
-
             # modifica il valore nella matrice della città scelta come da non visitare
             cityM[cityD[city][0]][cityD[city][1]] = 1
-
-            return True
+        # return True se Visiterei = 1 e False se Visiterei = 0
+        return riga.iloc[0]["Visiterei"] != 0
 
 
 # Verifica se è possibile andare al pixel (x, y) dall'attuale
@@ -418,11 +407,12 @@ def main():
 
         if scelta == '1':
             # stampa tutte le città salvate nel file
-            print(f"\nQuesta è la lista delle città disponibili:\n{traveldata['Destinazione']}\n")
+            print(f"\nQuesta è la lista delle città disponibili:\n{traveldata['Destinazione'].to_string(index=False)}\n")
 
             print('Queste sono le città che visiteresti:')
             # stampa solo le righe con 1
-            print(userdata.loc[userdata['Visiterei'] == 1, 'Destinazione'], '\n')
+            df = userdata.loc[userdata['Visiterei'] == 1, 'Destinazione']
+            print(df.to_string(index=False), '\n')
 
             city = input(
                 "Scrivi una città che visiteresti, "
@@ -435,11 +425,12 @@ def main():
 
         elif scelta == '2':
             # stampa tutte le città salvate nel file
-            print(f"\nQuesta è la lista delle città disponibili:\n{traveldata['Destinazione']}\n")
+            print(f"\nQuesta è la lista delle città disponibili:\n{traveldata['Destinazione'].to_string(index=False)}\n")
 
             print('Queste sono le città che non visiteresti:')
             # stampa solo le righe con 0
-            print(userdata.loc[userdata['Visiterei'] == 0, 'Destinazione'], '\n')
+            df = userdata.loc[userdata['Visiterei'] == 0, 'Destinazione']
+            print(df.to_string(index=False), '\n')
 
             city = input(
                 "Scrivi una città che non visiteresti, "
