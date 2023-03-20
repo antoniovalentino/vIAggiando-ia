@@ -11,15 +11,82 @@ DURANTE:
     fare una lista dell'odio e togliere 1 priorità
 '''
 
+import random
+from collections import deque
+
 # Import libraries
 import pandas as pd
-import random
 from sklearn import tree
 from sklearn.tree import DecisionTreeClassifier
 
 # dataframe globali che contengono il contenuto dei file
 traveldata = pd.read_csv("travel_data.csv")
 userdata = pd.read_csv("user_data.csv")
+
+# matrice di tutte le città
+cityM = [
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0]
+]
+
+# dizionario di associazione (città,pixel della matrice)
+cityD = {
+    'Roma': (0, 0),
+    'Londra': (0, 1),
+    'Parigi': (0, 2),
+    'Tokyo': (0, 3),
+    'New York': (0, 4),
+    'Barcellona': (0, 5),
+    'Città del Messico': (0, 6),
+    'Berlino': (1, 0),
+    'Sidney': (1, 1),
+    'Rio de Janeiro': (1, 2),
+    'Bangkok': (1, 3),
+    'Amsterdam': (1, 4),
+    'San Francisco': (1, 5),
+    'Madrid': (1, 6),
+    'Dubai': (2, 0),
+    'Mumbai': (2, 1),
+    'Vienna': (2, 2),
+    'Seoul': (2, 3),
+    'Firenze': (2, 4),
+    'Los Angeles': (2, 5),
+    'Hong Kong': (2, 6),
+    'Istanbul': (3, 0),
+    'Toronto': (3, 1),
+    'San Paolo': (3, 2),
+    'Shanghai': (3, 3),
+    'Venezia': (3, 4),
+    'Napoli': (3, 5),
+    'Matera': (3, 6),
+    'Bologna': (4, 0),
+    'Palermo': (4, 1),
+    'Verona': (4, 2),
+    'Genova': (4, 3),
+    'Lecce': (4, 4),
+    'Trieste': (4, 5),
+    'Helsinki': (4, 6),
+    'Rio Grande': (5, 0),
+    'Marrakech': (5, 1),
+    'Honolulu': (5, 2),
+    'Lisbona': (5, 3),
+    'Dublino': (5, 4),
+    'Buenos Aires': (5, 5),
+    'Atene': (5, 6),
+    'Reykjavik': (6, 0),
+    'Chiang Mai': (6, 1),
+    'Vancouver': (6, 2),
+    'Taipei': (6, 3),
+    'Salonicco': (6, 4),
+    'Austin': (6, 5),
+    'Copenhagen': (6, 6)
+}
+
 
 # funzione per scrivere il contenuto dei dataframe nei file,
 # prima di scrivere converte i dati dei dataframe da numeri a parole
@@ -75,8 +142,10 @@ def writeFile():
         2: 'calda'
 
     }
-    traveldata['Temperatura'] = traveldata['Temperatura'].map(t) #Pandas has a map() method that takes a dictionary with information on how to convert the values.
-    userdata['Temperatura'] = userdata['Temperatura'].map(t) #Pandas has a map() method that takes a dictionary with information on how to convert the values.
+    traveldata['Temperatura'] = traveldata['Temperatura'].map(
+        t)  # Pandas has a map() method that takes a dictionary with information on how to convert the values.
+    userdata['Temperatura'] = userdata['Temperatura'].map(
+        t)  # Pandas has a map() method that takes a dictionary with information on how to convert the values.
     ###############################################################################
     traveldata.to_csv("travel_data.csv", index=False)
     userdata.to_csv("user_data.csv", index=False)
@@ -137,21 +206,37 @@ def numerizeDataframe():
     traveldata['Temperatura'] = traveldata['Temperatura'].map(t)
     userdata['Temperatura'] = userdata['Temperatura'].map(t)
 
+
+# funzione che genera la matrice delle città
+def setCityM():
+    global cityM, cityD, userdata
+    userdataList = userdata["Destinazione"].tolist()
+
+    for i in cityD:
+        if i in userdataList:
+            riga = userdata[userdata['Destinazione'].str.contains(i)]
+            val = riga["Visiterei"].tolist()
+            if val[0] == 0:
+                cityM[cityD[i][0]][cityD[i][1]] = 1
+
+
 # funzione che genera quattro consigli di città che l'utente visiterebbe, utilizzando i decision tree
 def vIAggiando():
     global traveldata, userdata
     features = ['Attività', 'Temperatura', 'Budget', 'Cultura']
 
-    X = userdata[features]   # The feature columns are the columns that we try to predict from, and the target column is the column with the values we try to predict
-    y = userdata['Visiterei'] ####################################################################
+    X = userdata[
+        features]  # The feature columns are the columns that we try to predict from, and the target column is the column with the values we try to predict
+    y = userdata['Visiterei']  ####################################################################
 
-    dtree = DecisionTreeClassifier() # creazione decision tree
-    dtree = dtree.fit(X.values, y) # Now we can create the actual decision tree, fit it with our details. Start by importing the modules we need:
+    dtree = DecisionTreeClassifier()  # creazione decision tree
+    dtree = dtree.fit(X.values,
+                      y)  # Now we can create the actual decision tree, fit it with our details. Start by importing the modules we need:
 
     tree.plot_tree(dtree, feature_names=features)
 
     possible_city = []  # lista di tutte le città che l'utente visiterebbe secondo il decision tree
-    ris = []    # lista che contiene i quattro consigli dell'agente
+    ris = []  # lista che contiene i quattro consigli dell'agente
     z = 0
     for i in range(len(traveldata)):
         # predict sul decision tree con i dati di ogni città presente nel file travel_data
@@ -161,7 +246,7 @@ def vIAggiando():
     # ciclo while nel quale vengono scelte quattro città all'interno della lista possible_city
     while z < 4:
         choice = random.choice(possible_city)
-        if choice not in ris:   # verifica che la scelta non faccia già parte del risultato
+        if choice not in ris:  # verifica che la scelta non faccia già parte del risultato
             ris.append(choice)
             z += 1
     return ris  # ritorna le quattro scelte
@@ -171,7 +256,7 @@ def vIAggiando():
 # nel caso fosse presente con Visiterei = 1 viene rimossa,
 # nel caso fosse presente con Visiterei = 0 viene modificato il valore portandolo a 1
 def addCityPreferences(city):
-    global traveldata, userdata
+    global traveldata, userdata, cityM, cityD
     userdataList = userdata['Destinazione'].tolist()
 
     if city not in userdataList:
@@ -184,14 +269,23 @@ def addCityPreferences(city):
              'Budget': [riga.iloc[0]['Budget']], 'Cultura': [riga.iloc[0]['Cultura']],
              'Visiterei': [1]})
         userdata = pd.concat([userdata, nuova_riga], ignore_index=True)
+        # modifica il valore nella matrice della città scelta come da visitare
+        cityM[cityD[city][0]][cityD[city][1]] = 0
+
         return True
     else:
         riga = userdata[userdata['Destinazione'].str.contains(city)]
         if riga.iloc[0]["Visiterei"] == 1:
             userdata = userdata.drop(riga.index)
+            # modifica il valore nella matrice della città scelta come da visitare
+            cityM[cityD[city][0]][cityD[city][1]] = 0
+
             return False
         else:
             userdata.loc[userdata['Destinazione'] == city, 'Visiterei'] = 1
+            # modifica il valore nella matrice della città scelta come da visitare
+            cityM[cityD[city][0]][cityD[city][1]] = 0
+
             return True
 
 
@@ -199,7 +293,7 @@ def addCityPreferences(city):
 # nel caso fosse presente con Visiterei = 0 viene rimossa,
 # nel caso fosse presente con Visiterei = 1 viene modificato il valore portandolo a 0
 def addCityDislike(city):
-    global traveldata, userdata
+    global traveldata, userdata, cityM, cityD
     userdataList = userdata['Destinazione'].tolist()
     if city not in userdataList:
         # troviamo la riga che contiene la città selezionata
@@ -211,20 +305,110 @@ def addCityDislike(city):
              'Budget': [riga.iloc[0]['Budget']], 'Cultura': [riga.iloc[0]['Cultura']],
              'Visiterei': [0]})
         userdata = pd.concat([userdata, nuova_riga], ignore_index=True)
+
+        # modifica il valore nella matrice della città scelta come da non visitare
+        cityM[cityD[city][0]][cityD[city][1]] = 1
+
         return True
     else:
         riga = userdata[userdata['Destinazione'].str.contains(city)]
         if riga.iloc[0]["Visiterei"] == 0:
             userdata = userdata.drop(riga.index)
+
+            # modifica il valore nella matrice della città scelta come da non visitare
+            cityM[cityD[city][0]][cityD[city][1]] = 0
+
             return False
         else:
             userdata.loc[userdata['Destinazione'] == city, 'Visiterei'] = 0
+
+            # modifica il valore nella matrice della città scelta come da non visitare
+            cityM[cityD[city][0]][cityD[city][1]] = 1
+
             return True
+
+
+# Verifica se è possibile andare al pixel (x, y) dall'attuale
+# pixel. La funzione restituisce false se il pixel non è valido
+def isSafe(mat, x, y):
+    return 0 <= x < len(mat) and 0 <= y < len(mat[0]) and mat[x][y] == 0
+
+
+# Verifica se il pixel (x, y) è il goal da raggiungere
+def isGoal(x, y, xG, yG):
+    if (x == xG and y == yG):
+        return True
+    else:
+        return False
+
+
+# Trova il path più breve tra le due città usando BFS
+def cityPath(cityM, x, y, xG, yG, visited):
+    # Lista di tutte gli otto possibili movimenti
+    row = [-1, -1, -1, 0, 0, 1, 1, 1]
+    col = [-1, 0, 1, -1, 1, -1, 0, 1]
+
+    # caso base
+    if not cityM or not len(cityM):
+        return
+
+    # crea una coda e mette in coda il pixel di partenza
+    q = deque()
+    q.append(((x, y), [(x, y)]))
+
+    # verifica se il pixel è già stato visitato
+    if cityM[x][y] == visited:
+        return
+
+    # break quando la coda è vuota
+    while q:
+        # toglie dalla coda il nodo frontale e lo processa
+        (x, y), path = q.popleft()
+
+        # rimpiazza il valore del pixel con il valore del visitato
+        cityM[x][y] = visited
+
+        # processa gli otto pixel adiacenti all'attuale pixel e
+        # aggiunge ogni pixel valido alla coda
+        for k in range(len(row)):
+            # verifica se il pixel adiacente nella posizione (x + row[k], y + col[k]) è valido
+            if isSafe(cityM, x + row[k], y + col[k]):
+                # aggiunge il pixel adiacente
+                q.append(((x + row[k], y + col[k]), path + [(x + row[k], y + col[k])]))
+            # verifica se il pixel nella posizione (x + row[k], y + col[k]) è il goal
+            # e nel caso termina la ricerca del path
+            if isGoal(x + row[k], y + col[k], xG, yG):
+                return path + [(x + row[k], y + col[k])]
+    print("Non esiste nessun path")
+
+
+def coupleCity(cityStart, cityDest):
+    global cityM, cityD
+    # ottiene la coppia (x, y) della città di partenza
+    x = cityD[cityStart][0]
+    y = cityD[cityStart][1]
+    # ottiene la coppia (x, y) della città di desinazione
+    xG = cityD[cityDest][0]
+    yG = cityD[cityDest][1]
+
+    # numero usato come 'visitato'
+    visited = 2
+
+    cityPathQueue = cityPath(cityM, x, y, xG, yG, visited)
+    cityPathList = []
+    for i in cityPathQueue:
+        for k, v in cityD.items():
+            if v == i:
+                cityPathList.append(k)
+
+    stringa = " ---> ".join(cityPathList)
+    print(stringa)
 
 
 def main():
     global userdata, traveldata
     x = 0
+    setCityM()
     while x == 0:
         numerizeDataframe()
         scelta = input(
@@ -282,6 +466,15 @@ def main():
                     addCityPreferences(city)
                     f = True
                     print(f"{city} è stata aggiunta tra quelle che visiteresti\n")
+
+                    print(
+                        f"\nVorrei consigliarti un percorso di città per arrivare alla tua selta, ovviamente evitando quelle che non visiteresti,\n"
+                        f"Da quale città vorresti partire? Ecco la lista delle città disponibili:\n{traveldata['Destinazione']}")
+
+                    cityStart = input("")
+
+                    coupleCity(cityStart, city)
+
                 else:
                     print("Error: Scrivi una città tra quelle che ti ho consigliato!\n")
 

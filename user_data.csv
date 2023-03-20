@@ -1,9 +1,11 @@
-Destinazione,Attività,Temperatura,Budget,Cultura,Visitato
+Destinazione,Attività,Temperatura,Budget,Cultura,Visiterei
 Parigi,romantica,mite,alto,europea,0
-Salonicco,storica,calda,medio,europea,1
 Copenhagen,minimalista,fredda,alto,europea,1
 Vienna,lussuosa,mite,alto,europea,0
+Salonicco,storica,calda,medio,europea,1
+Bologna,accogliente,mite,medio,europea,1
+Atene,storica,calda,medio,europea,1
 Roma,storica,calda,medio,europea,0
-Tokyo,moderna,calda,alto,asiatica,1
-Taipei,moderna,mite,basso,asiatica,0
 Austin,trendy,calda,medio,americana,0
+Dublino,storica,fredda,medio,europea,1
+Amsterdam,artistica,mite,medio,europea,1
