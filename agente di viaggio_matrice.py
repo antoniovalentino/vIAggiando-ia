@@ -240,8 +240,8 @@ def vIAggiando():
     z = 0
     for i in range(len(traveldata)):
         # predict sul decision tree con i dati di ogni città presente nel file travel_data
-        if int(dtree.predict([[traveldata["Attività"][i], traveldata["Temperatura"][i], traveldata["Budget"][i],
-                               traveldata["Cultura"][i]]])) == 1:
+        if dtree.predict([[traveldata["Attività"][i], traveldata["Temperatura"][i], traveldata["Budget"][i],
+                               traveldata["Cultura"][i]]]) == 1:
             possible_city.append(traveldata["Destinazione"][i])
     # ciclo while nel quale vengono scelte quattro città all'interno della lista possible_city
     while z < 4:
