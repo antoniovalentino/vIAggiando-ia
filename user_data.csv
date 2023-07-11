@@ -2,9 +2,11 @@ Destinazione,Attività,Temperatura,Budget,Cultura,Visiterei
 Copenhagen,minimalista,fredda,alto,europea,1
 Vienna,lussuosa,mite,alto,europea,0
 Salonicco,storica,calda,medio,europea,1
-Bologna,accogliente,mite,medio,europea,1
-Atene,storica,calda,medio,europea,1
-Amsterdam,artistica,mite,medio,europea,1
 Palermo,vivace,calda,basso,europea,1
-Venezia,romantica,mite,medio,europea,1
+Firenze,artistica,calda,medio,europea,1
 Matera,storica,calda,basso,europea,1
+Roma,storica,calda,medio,europea,0
+Berlino,alternativa,mite,basso,europea,1
+Lisbona,artistica,mite,medio,europea,1
+Barcellona,artistica,calda,medio,europea,1
+Amsterdam,artistica,mite,medio,europea,1

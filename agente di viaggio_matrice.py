@@ -207,7 +207,7 @@ def numerizeDataframe():
     userdata['Temperatura'] = userdata['Temperatura'].map(t)
 
 
-# funzione che genera la matrice delle città
+# funzione che genera la matrice delle città, mettendo 1 a quelle che non visiteresti
 def setCityM():
     global cityM, cityD, userdata
     userdataList = userdata["Destinazione"].tolist()
@@ -255,7 +255,7 @@ def vIAggiando():
 # funzione che prende in ingresso una città e nel caso non è presente nel dataframe userdata la aggiunge,
 # nel caso fosse presente con Visiterei = 1 viene rimossa,
 # nel caso fosse presente con Visiterei = 0 viene modificato il valore portandolo a 1
-def addCityPreferences(city):
+def addCityPreferences(city, verify):
     global traveldata, userdata, cityM, cityD
     userdataList = userdata['Destinazione'].tolist()
 
@@ -270,7 +270,8 @@ def addCityPreferences(city):
         cityM[cityD[city][0]][cityD[city][1]] = 0
 
         return True
-    else:
+    # l' else viene eseguito solo nel caso in cui il metodo è stato richiamato dal numero 1 del menu
+    elif verify:
 
         riga = userdata[userdata['Destinazione'].str.contains(city)]
         if riga.iloc[0]["Visiterei"] == 1:
@@ -282,6 +283,8 @@ def addCityPreferences(city):
         cityM[cityD[city][0]][cityD[city][1]] = 0
         # return True se Visiterei = 0 e False se Visiterei = 1
         return riga.iloc[0]["Visiterei"] != 1
+
+    return True
 
 
 # funzione che prende in ingresso una città e nel caso non è presente nel dataframe userdata la aggiunge,
@@ -332,7 +335,7 @@ def isGoal(x, y, xG, yG):
 
 
 # Trova il path più breve tra le due città usando BFS
-def cityPath(cityM, x, y, xG, yG, visited):
+def cityPath(cityM, x, y, xG, yG):
     # Lista di tutte gli otto possibili movimenti
     row = [-1, -1, -1, 0, 0, 1, 1, 1]
     col = [-1, 0, 1, -1, 1, -1, 0, 1]
@@ -345,29 +348,23 @@ def cityPath(cityM, x, y, xG, yG, visited):
     q = deque()
     q.append(((x, y), [(x, y)]))
 
-    # verifica se il pixel è già stato visitato
-    if cityM[x][y] == visited:
-        return
-
     # break quando la coda è vuota
     while q:
         # toglie dalla coda il nodo frontale e lo processa
         (x, y), path = q.popleft()
 
-        # rimpiazza il valore del pixel con il valore del visitato
-        cityM[x][y] = visited
-
         # processa gli otto pixel adiacenti all'attuale pixel e
         # aggiunge ogni pixel valido alla coda
         for k in range(len(row)):
-            # verifica se il pixel adiacente nella posizione (x + row[k], y + col[k]) è valido
-            if isSafe(cityM, x + row[k], y + col[k]):
-                # aggiunge il pixel adiacente
-                q.append(((x + row[k], y + col[k]), path + [(x + row[k], y + col[k])]))
             # verifica se il pixel nella posizione (x + row[k], y + col[k]) è il goal
             # e nel caso termina la ricerca del path
             if isGoal(x + row[k], y + col[k], xG, yG):
                 return path + [(x + row[k], y + col[k])]
+            # verifica se il pixel adiacente nella posizione (x + row[k], y + col[k]) è valido
+            if isSafe(cityM, x + row[k], y + col[k]):
+                # aggiunge il pixel adiacente
+                q.append(((x + row[k], y + col[k]), path + [(x + row[k], y + col[k])]))
+
     print("Non esiste nessun path")
 
 
@@ -380,10 +377,7 @@ def coupleCity(cityStart, cityDest):
     xG = cityD[cityDest][0]
     yG = cityD[cityDest][1]
 
-    # numero usato come 'visitato'
-    visited = 2
-
-    cityPathQueue = cityPath(cityM, x, y, xG, yG, visited)
+    cityPathQueue = cityPath(cityM, x, y, xG, yG)
     cityPathList = []
     for i in cityPathQueue:
         for k, v in cityD.items():
@@ -397,8 +391,8 @@ def coupleCity(cityStart, cityDest):
 def main():
     global userdata, traveldata
     x = 0
-    setCityM()
     while x == 0:
+        setCityM()
         numerizeDataframe()
         scelta = input(
             "Scegli tra le seguenti opzioni: \n1. Aggiungi/Rimuovi una città che visiteresti\n"
@@ -418,7 +412,7 @@ def main():
                 "Scrivi una città che visiteresti, "
                 "per rimuovere una città scrivi un nome già presente nella lista delle città che visiteresti\n")
 
-            if addCityPreferences(city):
+            if addCityPreferences(city, True):
                 print(f"{city} è stata aggiunta\n")
             else:
                 print(f"{city} è stata rimossa\n")
@@ -454,17 +448,21 @@ def main():
             while not f:
                 city = input("Inserisci la città che ti piace di più\n")
                 if city in ris:
-                    addCityPreferences(city)
+                    addCityPreferences(city, False)
                     f = True
                     print(f"{city} è stata aggiunta tra quelle che visiteresti\n")
 
                     print(
                         f"\nVorrei consigliarti un percorso di città per arrivare alla tua selta, ovviamente evitando quelle che non visiteresti,\n"
                         f"Da quale città vorresti partire? Ecco la lista delle città disponibili:\n{traveldata['Destinazione']}")
-
-                    cityStart = input("")
-
-                    coupleCity(cityStart, city)
+                    response = False
+                    while not response:
+                        cityStart = input("")
+                        if cityStart in traveldata['Destinazione'].tolist():
+                            response = True
+                            coupleCity(cityStart, city)
+                        else :
+                            print("Error: Scrivi una città tra quelle che ti ho consigliato!\n")
 
                 else:
                     print("Error: Scrivi una città tra quelle che ti ho consigliato!\n")
