@@ -226,14 +226,13 @@ def vIAggiando():
     features = ['Attività', 'Temperatura', 'Budget', 'Cultura']
 
     X = userdata[
-        features]  # The feature columns are the columns that we try to predict from, and the target column is the column with the values we try to predict
-    y = userdata['Visiterei']  ####################################################################
+        features]  # Le colonne "features" sono le colonne dalle quali proviamo a fare la predizione e la colonna "visiterei" è la colonna con il valore che proviamo a predirre
+    y = userdata['Visiterei']
 
     dtree = DecisionTreeClassifier()  # creazione decision tree
     dtree = dtree.fit(X.values,
-                      y)  # Now we can create the actual decision tree, fit it with our details. Start by importing the modules we need:
-
-    tree.plot_tree(dtree, feature_names=features)
+                      y)   # Ora possiamo creare l'attuale decision tree, adattato ai nostri dettagli.
+    tree.plot_tree(dtree, feature_names=features) ###########################
 
     possible_city = []  # lista di tutte le città che l'utente visiterebbe secondo il decision tree
     ris = []  # lista che contiene i quattro consigli dell'agente
@@ -442,7 +441,6 @@ def main():
             for item in ris:
                 print("- " + item)
             f = False
-
             # scelta della destinazione preferita tra quelle date a disposizione,
             # nel caso ne sceglie una non presente nei consigli deve reinserire la scelta
             while not f:
@@ -462,7 +460,7 @@ def main():
                             response = True
                             coupleCity(cityStart, city)
                         else :
-                            print("Error: Scrivi una città tra quelle che ti ho consigliato!\n")
+                            print("Error: Scrivi una città tra quelle della lista!\n")
 
                 else:
                     print("Error: Scrivi una città tra quelle che ti ho consigliato!\n")
