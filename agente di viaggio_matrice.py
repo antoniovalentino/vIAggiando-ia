@@ -233,7 +233,6 @@ def vIAggiando():
     dtree = DecisionTreeClassifier()  # creazione decision tree
     dtree = dtree.fit(X.values,
                       y)   # Ora possiamo creare l'attuale decision tree, adattato ai nostri dettagli.
-    tree.plot_tree(dtree, feature_names=features) ###########################
 
     possible_city = []  # lista di tutte le città che l'utente visiterebbe secondo il decision tree
     ris = []  # lista che contiene i quattro consigli dell'agente
