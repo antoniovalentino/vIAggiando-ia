@@ -438,11 +438,22 @@ def main():
 
                     print(
                         f"\nVorrei consigliarti un percorso di città per arrivare alla tua selta, ovviamente evitando quelle che non visiteresti,\n"
-                        f"Da quale città vorresti partire? Ecco la lista delle città disponibili:\n{traveldata['Destinazione']}")
+                        f"Da quale città vorresti partire? Ecco la lista delle città disponibili:\n")
+
+                    df = userdata.loc[userdata['Visiterei'] == 0, 'Destinazione'] # lista delle città che l'utente non visiterebbe
+                    cityList = traveldata['Destinazione'].tolist() # lista di tutte le città
+
+                    for elemento in df: #ciclo for per rimuovere le città che l'utente non visiterebbe dalla possibile scelta
+                        if elemento in cityList:
+                           cityList.remove(elemento)
+
+                    for item in cityList:
+                        print("- " + item)
+
                     response = False
                     while not response:
                         cityStart = input("")
-                        if cityStart in traveldata['Destinazione'].tolist():
+                        if cityStart in cityList:
                             response = True
                             coupleCity(cityStart, city)
                         else :
