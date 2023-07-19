@@ -1,17 +1,3 @@
-'''
-INPUT:
-    Azioni svolte dall'agente: stampare una meta di viaggio
-    Obiettivo: consigliare una meta di viaggio e un percorso di viaggio
-    Conoscenze di partenza: varie località con le relative caratteristiche (meteo, cultura, cibo, ambiente) e
-                            una matrice che le racchiude tutte
-
-DURANTE:
-    Esperienze precedenti: prende in considerazione gli eventi che sono piaciuti al cliente
-    Conoscenze acquisite durante il percorso: preferenze dell'utente in base ai vari filtri, scelta dell'utente
-    Stimolo: località aggiunte nei visiterei o nei non visiterei da parte dell'utente,
-             richiesta di consigliare una città da visitare e del percorso per raggiungerla
-'''
-
 import random
 from collections import deque
 
